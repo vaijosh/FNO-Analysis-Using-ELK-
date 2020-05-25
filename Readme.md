@@ -41,7 +41,7 @@ We used kibana based dashboards to visualize the stock activities.
 # Sample logstash config file to parse bhavcopy csv file. It will parse FNO bhavcopy csv files are downloaded in E:/FNO Analysis Using ELK/bhavcopy directory 
 input {
 	file {
-		path => "E:/FNO Analysis Using ELK/bhavcopy/*.csv"
+		path => "E:/FNOAnalysisUsingELK/bhavcopy/*.csv"
 		start_position => beginning
 	}
 }
