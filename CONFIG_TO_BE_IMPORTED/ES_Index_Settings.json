@@ -1,0 +1,1 @@
+{"settings":{"number_of_shards":5,"refresh_interval":"5s","number_of_replicas":0},"mappings":{"properties":{"INSTRUMENT":{"type":"keyword"},"SYMBOL":{"type":"keyword"},"EXPIRY_DT":{"type":"date"},"STRIKE_PR":{"type":"float"},"OPTION_TYP":{"type":"keyword"},"OPEN_INT":{"type":"long"},"CHG_IN_OI":{"type":"float"},"TIMESTAMP":{"type":"date"}}}}
