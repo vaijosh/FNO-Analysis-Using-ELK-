@@ -8,24 +8,25 @@ We used kibana based dashboards to visualize the stock activities.
 2. Download ES https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.7.0-windows-x86_64.zip
 3. Download Kibana from https://artifacts.elastic.co/downloads/kibana/kibana-7.7.0-windows-x86_64.zip
 4. Download logstash from https://artifacts.elastic.co/downloads/logstash/logstash-7.7.0.zip
+5. Elasticsearch head plugin from https://chrome.google.com/webstore/detail/elasticsearch-head/ffmkiejjmecolpfloofpjologoblkegm
 
 ## How to use
 1.Start Elastic Search using <ES_DOWNLOAD_DIRECTORY>/bin/elasticsearch.bat
-3.Download head plugin in chrome browser
-2.Once ElasticSearch is connected, go to "Any Request Tab" and perform following step
+
+2. Open head plugin and once ElasticSearch is connected, go to "Any Request Tab" and perform following step
 Expand Query box and put: URL: "http://localhost:9200/bhavcopy" in first box and select "PUT" from the right side combo box.
 Copy the contents from file CONFIG_TO_BE_IMPORTED/ES_Index_Settings.json in the big Text box above "Request" button, .
-```
-4. Click Request, button.
 
-5.Copy CONFIG_TO_BE_IMPORTED/logstash_bhavcopy.conf in <LOGSTASH_EXTRACT_DIR>/config directory.
+3. Click Request, button.
 
-6. Edit file <LOGSTASH_EXTRACT_DIR>/config/logstash_bhavcopy.conf and change directory location "E:/FNOAnalysisUsingELK/bhavcopy/" and specify here full path of directory where you will put bhavcopy csv files downloaded from NSE site.
+4.Copy CONFIG_TO_BE_IMPORTED/logstash_bhavcopy.conf in <LOGSTASH_EXTRACT_DIR>/config directory.
 
-7.Start all services using StartServices.bat
+5. Edit file <LOGSTASH_EXTRACT_DIR>/config/logstash_bhavcopy.conf and change directory location "E:/FNOAnalysisUsingELK/bhavcopy/" and specify here full path of directory where you will put bhavcopy csv files downloaded from NSE site.
 
-8.Open Kibana portal using localhost:5601
+6.Start all services using StartServices.bat
 
-9.Import the Kibana dashboards  from CONFIG_TO_BE_IMPORTED/KibanaDashboards.ndjson
+7.Open Kibana portal using localhost:5601
 
-10.Start using the dashboards. Currently two dashboards are available "FNO Open Interest Dashboard" gives tabular view of selected scrips whereas "Active FNO Scrips" provides graphical view of active Symbols based on changes in open interest.
+8.Import the Kibana dashboards  from CONFIG_TO_BE_IMPORTED/KibanaDashboards.ndjson
+
+9.Start using the dashboards. Currently two dashboards are available "FNO Open Interest Dashboard" gives tabular view of selected scrips whereas "Active FNO Scrips" provides graphical view of active Symbols based on changes in open interest.
