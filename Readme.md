@@ -14,119 +14,18 @@ We used kibana based dashboards to visualize the stock activities.
 3.Download head plugin in chrome browser
 2.Once ElasticSearch is connected, go to "Any Request Tab" and perform following step
 Expand Query box and put: URL: "http://localhost:9200/bhavcopy" in first box and select "PUT" from the right side combo box.
-Put following payload in bigger Text box.
+Copy the contents from file CONFIG_TO_BE_IMPORTED/ES_Index_Settings.json in the big Text box above "Request" button, .
 ```
-{
-     "settings" : {
-         "number_of_shards" : 5,
- 		"refresh_interval" : "5s"
-     },
-     "mappings" : {
-         "properties" : {
-             "INSTRUMENT" : { "type" : "keyword" },
- 			"SYMBOL" : { "type" : "keyword" },
- 			"EXPIRY_DT" : { "type" : "date" },
- 			"STRIKE_PR" : { "type" : "float" },
- 			"OPTION_TYP" : { "type" : "keyword" },
- 			"OPEN_INT" : { "type" : "long" },
- 			"CHG_IN_OI" : { "type" : "float" },
- 			"TIMESTAMP" : { "type" : "date" }	
-         }
-     }
- }
-```
-And click Request.
+4. Click Request, button.
 
-3.create logstash configs logstash_bhavcopy.conf
+5.Copy CONFIG_TO_BE_IMPORTED/logstash_bhavcopy.conf in <LOGSTASH_EXTRACT_DIR>/config directory.
 
-```
-# Sample logstash config file to parse bhavcopy csv file. It will parse FNO bhavcopy csv files are downloaded in E:/FNO Analysis Using ELK/bhavcopy directory 
-input {
-	file {
-		path => "E:/FNOAnalysisUsingELK/bhavcopy/*.csv"
-		start_position => beginning
-	}
-}
-filter {
-    csv {
-        columns => [
-                "INSTRUMENT",
-				"SYMBOL",
-				"EXPIRY_DT",
-				"STRIKE_PR",
-				"OPTION_TYP",
-				"OPEN",
-				"HIGH",
-				"LOW",
-				"CLOSE",
-				"SETTLE_PR",
-				"CONTRACTS",
-				"VAL_INLAKH",
-				"OPEN_INT",
-				"CHG_IN_OI",
-				"TIMESTAMP"
-        ]
-		separator => ","
-    }
-	prune {
-		whitelist_names  => [ 
-			"INSTRUMENT",
-			"SYMBOL",
-			"EXPIRY_DT",
-			"STRIKE_PR",
-			"OPTION_TYP",
-			"OPEN_INT",
-			"CHG_IN_OI",
-			"TIMESTAMP"
-		]
-	}
-	prune {
-		blacklist_values => [ "INSTRUMENT", "INSTRUMENT",
-						  "SYMBOL", "SYMBOL",
-						  "EXPIRY_DT", "EXPIRY_DT",
-						  "STRIKE_PR","STRIKE_PR",
-						  "OPTION_TYP", "OPTION_TYP",
-						  "OPEN", "OPEN",
-						  "HIGH", "HIGH",
-						  "LOW", "LOW",
-						  "CLOSE", "CLOSE",
-						  "SETTLE_PR", "SETTLE_PR",
-						  "CONTRACTS", "CONTRACTS",
-						  "VAL_INLAKH", "VAL_INLAKH",
-						  "OPEN_INT", "OPEN_INT",
-						  "CHG_IN_OI", "CHG_IN_OI",
-						  "TIMESTAMP", "TIMESTAMP"
-						  ]
-	}
-	mutate {
-		uppercase => ["EXPIRY_DT"]
-	}
-	date {
-		match=> ["EXPIRY_DT","dd-MMM-yyyy"]
-		target=> "EXPIRY_DT"
-	}
-	date {
-		match=> ["TIMESTAMP","dd-MMM-yyyy"]
-		target=> "TIMESTAMP"
-	}
-}
-output {
-  elasticsearch {
-	hosts => ["http://localhost:9200"]
-    index => "bhavcopy"
-  }
-}
-```
+6. Edit file <LOGSTASH_EXTRACT_DIR>/config/logstash_bhavcopy.conf and change directory location "E:/FNOAnalysisUsingELK/bhavcopy/" and specify here full path of directory where you will put bhavcopy csv files downloaded from NSE site.
 
-4.Copy logstash_bhavcopy.conf in conf directory of logstash.
+7.Start all services using StartServices.bat
 
-5.Start all services using StartServices.bat
+8.Open Kibana portal using localhost:5601
 
-6.Open Kibana portal using localhost:5601
+9.Import the Kibana dashboards  from CONFIG_TO_BE_IMPORTED/KibanaDashboards.ndjson
 
-7.Import the Kibana dashboards  from CONFIG_TO_BE_IMPORTED/KibanaDashboards.ndjson
-
-8.Start using the dashboards. Currently two dashboards are available "FNO Open Interest Dashboard" 
-gives tabular view of selected scrips whereas "Active FNO Scrips" provides graphical view of active
- Symbols based on changes in open interest.    
-     
+10.Start using the dashboards. Currently two dashboards are available "FNO Open Interest Dashboard" gives tabular view of selected scrips whereas "Active FNO Scrips" provides graphical view of active Symbols based on changes in open interest.
