@@ -11,9 +11,10 @@ We used kibana based dashboards to visualize the stock activities.
 
 ## How to use
 1.Start Elastic Search using <ES_DOWNLOAD_DIRECTORY>/bin/elasticsearch.bat
-
-2.Create ES index bhavcopy with following configs
-
+3.Download head plugin in chrome browser
+2.Once ElasticSearch is connected, go to "Any Request Tab" and perform following step
+Expand Query box and put: URL: "http://localhost:9200/bhavcopy" in first box and select "PUT" from the right side combo box.
+Put following payload in bigger Text box.
 ```
 {
      "settings" : {
@@ -34,7 +35,7 @@ We used kibana based dashboards to visualize the stock activities.
      }
  }
 ```
-
+And click Request.
 3.create logstash configs logstash_bhavcopy.conf
 
 ```
